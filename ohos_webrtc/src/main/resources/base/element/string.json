@@ -1,0 +1,20 @@
+{
+  "string": [
+    {
+      "name": "page_show",
+      "value": "page from package"
+    },
+    {
+      "name": "internet",
+      "value": "internet permission"
+    },
+    {
+      "name": "camera",
+      "value": "camera permission"
+    },
+    {
+      "name": "microphone",
+      "value": "microphone permission"
+    }
+  ]
+}

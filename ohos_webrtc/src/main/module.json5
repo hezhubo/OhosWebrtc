@@ -1,0 +1,24 @@
+{
+  "module": {
+    "name": "ohos_webrtc",
+    "type": "har",
+    "deviceTypes": [
+      "default",
+      "tablet"
+    ],
+    "requestPermissions": [
+      {
+        "name" : "ohos.permission.INTERNET",
+        "reason": "$string:internet"
+      },
+      {
+        "name" : "ohos.permission.CAMERA",
+        "reason": "$string:camera"
+      },
+      {
+        "name": "ohos.permission.MICROPHONE",
+        "reason": "$string:microphone"
+      }
+    ]
+  }
+}
