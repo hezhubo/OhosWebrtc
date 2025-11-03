@@ -2,6 +2,14 @@
 cmake_minimum_required(VERSION 3.5.0)
 project(ohosWebrtc)
 
+# ==== mediasoup client ====
+set(LIBWEBRTC_INCLUDE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/deps/webrtc/include CACHE PATH "" FORCE)
+set(LIBWEBRTC_BINARY_PATH ${CMAKE_CURRENT_SOURCE_DIR}/deps/webrtc/libs CACHE PATH "" FORCE)
+set(MEDIASOUPCLIENT_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(MEDIASOUPCLIENT_LOG_DEV OFF CACHE BOOL "" FORCE)
+set(MEDIASOUPCLIENT_LOG_TRACE OFF CACHE BOOL "" FORCE)
+add_subdirectory(deps/libmediasoupclient)
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -frtti")
@@ -95,7 +103,9 @@ set(LIBOHOS_WEBRTC_SOURCES
 add_library(ohos_webrtc SHARED ${LIBOHOS_WEBRTC_SOURCES})
 
 target_link_libraries(ohos_webrtc PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/deps/webrtc/libs/${OHOS_ARCH}/libwebrtc.a
+    mediasoupclient
+    sdptransform
+    ${LIBWEBRTC_BINARY_PATH}/${OHOS_ARCH}/libwebrtc.a
     libace_napi.z.so
     libhilog_ndk.z.so
     libohaudio.so
@@ -116,7 +126,8 @@ target_link_libraries(ohos_webrtc PUBLIC
     libnative_display_manager.so
 )
 
-set(WEBRTC_PATH ${CMAKE_CURRENT_SOURCE_DIR}/deps/webrtc/include)
+target_include_directories(ohos_webrtc PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/deps/libmediasoupclient/include)
+set(WEBRTC_PATH ${LIBWEBRTC_INCLUDE_PATH})
 target_compile_definitions(ohos_webrtc PUBLIC -DWEBRTC_POSIX)
 target_include_directories(ohos_webrtc PUBLIC ${WEBRTC_PATH})
 target_include_directories(ohos_webrtc PUBLIC ${WEBRTC_PATH}/third_party/abseil-cpp)
